@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Order - VulnShop{% endblock %}
+{% block content %}
+<h2>Order saya</h2>
+<ul>
+  {% for o in orders %}
+  <li><a href="{{ url_for('order_detail', order_id=o['id']) }}">#{{ o['id'] }}</a> - {{ o['name'] }} <small>({{ o['created_at'] }})</small></li>
+  {% else %}
+  <li>Belum ada order.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

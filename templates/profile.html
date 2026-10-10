@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Profil - VulnShop{% endblock %}
+{% block content %}
+<h2>Profil</h2>
+<p>Username: <strong>{{ user['username'] }}</strong></p>
+<p>Email: <strong>{{ user['email'] }}</strong></p>
+<form action="{{ url_for('change_email') }}" method="post" class="stack">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  <label>Email baru <input name="email" type="email" required></label>
+  <button>Ubah email</button>
+</form>
+{% endblock %}

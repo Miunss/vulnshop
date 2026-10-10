@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}{{ item['name'] }} - VulnShop{% endblock %}
+{% block content %}
+<h2>{{ item['name'] }}</h2>
+<p>{{ item['description'] }}</p>
+<p><strong>Rp {{ '{:,}'.format(item['price']).replace(',', '.') }}</strong></p>
+
+{% if user %}
+<form action="{{ url_for('new_order', product_id=item['id']) }}" method="post" class="stack">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  <label>Catatan order <input name="note" maxlength="200"></label>
+  <button>Pesan</button>
+</form>
+{% endif %}
+
+<h3>Komentar</h3>
+{% if user %}
+<form method="post" class="stack">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  <label>Tulis komentar <textarea name="body" rows="3" required></textarea></label>
+  <button>Kirim</button>
+</form>
+{% else %}
+<p><a href="{{ url_for('login') }}">Login</a> untuk berkomentar.</p>
+{% endif %}
+
+{% for c in comments %}
+<div class="comment"><strong>{{ c['username'] }}</strong> <small>{{ c['created_at'] }}</small><p>{{ c['body'] }}</p></div>
+{% else %}
+<p>Belum ada komentar.</p>
+{% endfor %}
+{% endblock %}
